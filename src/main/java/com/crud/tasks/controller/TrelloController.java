@@ -20,9 +20,11 @@ public class TrelloController {
     public void getTrelloBoards() {
 
         List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
-        for (TrelloBoardDto temp: trelloBoards) {
-            if (temp.getId().contains("Kodilla") || temp.getName().contains("Kodilla")) {
-                System.out.println(temp.getId() + " " + temp.getName());
+        if (trelloBoards.size() > 0) {
+            for (TrelloBoardDto temp : trelloBoards) {
+                if (temp.getId().contains("Kodilla") || temp.getName().contains("Kodilla")) {
+                    System.out.println(temp.getId() + " " + temp.getName());
+                }
             }
         }
         //trelloBoards.forEach(trelloBoardDto -> System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName()));
