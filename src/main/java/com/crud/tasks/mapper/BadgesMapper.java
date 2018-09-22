@@ -1,5 +1,6 @@
 package com.crud.tasks.mapper;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class BadgesMapper {
 
+    @JsonProperty("votes")
     private int votes;
-    private AttachmentsByTypeObjectMapper attachmentsByTypeObjectMapper;
+    @JsonProperty("attachmentsByType")
+    private AttachmentsByTypeObjectMapper attachments;
 
 }
