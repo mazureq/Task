@@ -4,7 +4,7 @@ import com.crud.tasks.config.TrelloConfig;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.mapper.BadgesMapper;
-import com.crud.tasks.mapper.CreatedTrelloCard;
+import com.crud.tasks.mapper.CreatedTrelloCardDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,10 +70,10 @@ public class TrelloClientTest {
         URI uri = new URI("Dupa");
         TrelloCardDto trelloCardDto = new TrelloCardDto("name", "description", "top", "test_id");
         when(urlBuilder.urlPost(trelloCardDto)).thenReturn(uri);
-        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard("1", new BadgesMapper(), "name", "shortUrl");
-        when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", new BadgesMapper(), "name", "shortUrl");
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
         //When
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
         //Then
         assertEquals("1", newCard.getId());
         assertEquals("name", newCard.getName());
