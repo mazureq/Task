@@ -1,9 +1,7 @@
 package com.crud.tasks.trello.client;
 
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,13 +15,13 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TrelloClientWithFacadeMappersTest {
+public class TrelloMapperTestSuite {
 
     @Autowired
     private TrelloMapper mappers;
 
     @Test
-    public void testMapToBoard() {
+    public void testMapToBoardAndMapToList() {
         //Given
         List<TrelloBoardDto> trelloBoardDtos = new ArrayList<>();
         List<TrelloListDto> trelloListDtos = new ArrayList<>();
@@ -45,7 +43,27 @@ public class TrelloClientWithFacadeMappersTest {
         List<TrelloBoardDto> listDtos = mappers.mapToBoardDto(list);
 
         //Then
-        Assert.assertEquals(3, list.size());
-        Assert.assertEquals(3, listDtos.size());
+        Assert.assertEquals("Board2", list.get(1).getName());
+        Assert.assertEquals("Board3", listDtos.get(2).getName());
+    }
+
+    @Test
+    public void testMapToCard() {
+        //Given
+        TrelloCardDto trelloCardDto = new TrelloCardDto("Name", "Description", "pos", "listId");
+        //When
+        TrelloCard trelloCard = mappers.mapToTrelloCard(trelloCardDto);
+        //Then
+        Assert.assertEquals("Name", trelloCard.getName());
+    }
+
+    @Test
+    public void testMapToCardDto() {
+        //Given
+        TrelloCard trelloCard = new TrelloCard("Name", "Description", "pos", "listId");
+        //When
+        TrelloCardDto trelloCardDto = mappers.mapToCardDto(trelloCard);
+        //Then
+        Assert.assertEquals("Name", trelloCardDto.getName());
     }
 }
