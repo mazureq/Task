@@ -7,6 +7,7 @@ import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -44,7 +45,7 @@ public class TaskControllerTest {
         List<Task> tasksList = new ArrayList<>();
         tasksList.add(new Task(1L, "Test Title", "Test Content"));
         List<TaskDto> taskDtoList = new ArrayList<>();
-        taskDtoList.add(new TaskDto(1L, "Test Title","Test Content"));
+        taskDtoList.add(new TaskDto(1L, "Test Title", "Test Content"));
 
         when(dbService.getAllTasks()).thenReturn(tasksList);
         when(taskMapper.mapToTaskDtoList(tasksList)).thenReturn(taskDtoList);
@@ -83,8 +84,8 @@ public class TaskControllerTest {
         TaskDto theTaskDto = new TaskDto(1L, "Test Title", "Test Content");
         Task task = new Task(1L, "Test Title", "Test Content");
 
-//        when(taskMapper.mapToTask(theTaskDto)).thenReturn(task);
-//        when(dbService.saveTask(task)).thenReturn(task);
+        when(taskMapper.mapToTask(Matchers.any())).thenReturn(task);
+        when(dbService.saveTask(task)).thenReturn(task);
         when(taskMapper.mapToTaskDto(task)).thenReturn(theTaskDto);
 
         Gson gson = new Gson();
