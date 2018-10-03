@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,10 +41,30 @@ public class DbServiceTestSuite {
     public void testGetTask() {
         //Given
         Task task = new Task(1L, "Test", "Test content");
-        when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
+        when(taskRepository.findById(1L)).thenReturn(Optional.ofNullable(task));
         //When
+        Task task1 = dbService.getTask(1L).get();
         //Then
-        assertEquals("Test", dbService.getTask(1L));
+        assertEquals("Test", task1.getTitle());
     }
+    @Test
+    public void testSaveTask() {
+        //Given
+        Task task = new Task(1L, "Test", "Test content");
+        when(taskRepository.save(task)).thenReturn(task);
+        //When
+        Task task1 = dbService.saveTask(task);
+        //Then
+        assertEquals(1L, task1.getId().longValue());
+    }
+    @Test
+    public void deleteTask() {
+        //Given
+        //When
+        dbService.deleteTask(1L);
+        //Then
+        verify(taskRepository).delete(1L);
+    }
+
 
 }
